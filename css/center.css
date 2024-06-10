@@ -1,0 +1,58 @@
+/* Progress Bar*/
+.title-header {
+    text-align: center;
+    color: orange;
+    margin-bottom: 30px;
+    }
+    
+    .progress-bar-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    }
+    
+    .progress-bar-icons i {
+    font-size: 24px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    }
+    
+    .progress-bar-icons .fa-map-marker,
+    .progress-bar-icons .fa-user,
+    .progress-bar-icons .fa-money,
+    .progress-bar-icons .fa-credit-card {
+    background-color: grey;
+    }
+    
+    .progress {
+    background-color: #fff;
+    border: 2px solid orange;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    }
+    
+    .progress-bar {
+    background-color: orange !important;
+    width: 0%;
+    border-radius: 10px;
+    }
+
+    section{
+        width: 100%;
+        height: 100vh;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 140px 0;
+        }
+
+/* Estilo para el contenedor de los centros */
+.center-list {
+    max-height: 400px; /* Altura máxima del contenedor */
+    overflow-y: auto; /* Permitir el desplazamiento vertical */
+    border: 1px solid orange; /* Borde naranja */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    margin-bottom: 20px; /* Margen inferior */
+}

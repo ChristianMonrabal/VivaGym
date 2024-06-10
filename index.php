@@ -65,7 +65,7 @@
                 <a class="nav-link" href="#">Ayuda</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-orange" href="#">Inscríbete</a>
+                <a class="btn btn-orange" href="./forms/center.php">Inscríbete</a>
             </li>
         </ul>
     </div>
