@@ -1,0 +1,99 @@
+/* Navbar */
+.navbar {
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.9); /* Color blanco con transparencia */
+    transition: background-color 0.5s ease;
+}
+
+.navbar-nav .nav-item.dropdown .nav-link {
+    color: black; /* Cambia el color del texto a negro */
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: black; /* Cambia el color del texto a negro */
+}
+
+.navbar-brand img {
+    max-height: 250px; /* Ajusta el tamaño del icono de la navbar */
+    padding-top: 20%;
+}
+
+.btn-orange {
+    background-color: #FF6200;
+    color: white;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 60%;
+}
+
+.btn-orange:hover {
+    background-color: #E55A00;
+}
+
+.content {
+    margin-top: 100px;
+}
+
+.navbar-nav {
+    margin-right: 5rem; 
+}
+
+.navbar-nav .nav-item {
+    margin-right: 15px;
+}
+
+.navbar-nav .nav-item:last-child {
+    margin-right: 50px; 
+}
+
+/* Carousel */
+.carousel-inner img {
+    height: 70vh;
+    object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 50px;
+    height: 50px;
+    background-size: 100%, 100%;
+    border-radius: 50%;
+}
+
+.container {
+    margin-top: 5%;
+}
+
+#vivagym {
+    padding-bottom: 3%;
+}
+
+.container .row img {
+    max-width: 100%; 
+}
+
+.container .row h4 {
+    margin-top: 20px; 
+}
+
+.container .row p {
+    font-size: 16px; 
+    margin-bottom: 20px; 
+}
+
+.text-orange {
+    color: #FF6200;
+}
+
+/* footer */
+.footer {
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+}
+
+.footer-info {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
