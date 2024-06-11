@@ -6,6 +6,8 @@ if(!isset($_SESSION['city'])) {
     header("Location: ./center.php"); // Redirigir a center.php
     exit();
 }
+
+$selectedCity = $_SESSION['city'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,7 +23,6 @@ if(!isset($_SESSION['city'])) {
 </head>
 
 <body>
-<section>
 <div class="container-fluid">
 <div class="container">
     <div class="row">
@@ -42,70 +43,90 @@ if(!isset($_SESSION['city'])) {
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="card text-center">
-                <div class="title">
-                    <i class="fa fa-heartbeat" aria-hidden="true"></i>
-                    <h2>Básica</h2>
+    <form action="./user.php" method="post">
+        <input type="hidden" name="city" value="<?php echo $selectedCity; ?>">
+        <input type="hidden" name="cuota" value="">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="title">
+                        <i class="fa fa-dumbbell" aria-hidden="true"></i>
+                        <h2>Básica</h2>
+                    </div>
+                    <div class="price">
+                        <h4><sup>€</sup>25.00</h4>
+                    </div>
+                    <div class="option">
+                        <ul>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a 1 gimnasio</li>
+                            <li> <i class="fa fa-times" aria-hidden="true"></i> Entrenador personal</li>
+                            <li> <i class="fa fa-times" aria-hidden="true"></i> Clases grupales</li>
+                            <li> <i class="fa fa-times" aria-hidden="true"></i> Acceso 24/7</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="price">
-                    <h4><sup>€</sup>25.00</h4>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="title">
+                        <i class="fa fa-heart" aria-hidden="true"></i>
+                        <h2>Recomendada</h2>
+                    </div>
+                    <div class="price">
+                        <h4><sup>€</sup>30.00</h4>
+                    </div>
+                    <div class="option">
+                        <ul>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a 50 gimnasios</li>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Entrenador personal</li>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Clases grupales</li>
+                            <li> <i class="fa fa-times" aria-hidden="true"></i> Acceso 24/7</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="option">
-                    <ul>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a 1 gimnasio</li>
-                        <li> <i class="fa fa-times" aria-hidden="true"></i> Entrenador personal</li>
-                        <li> <i class="fa fa-times" aria-hidden="true"></i> Clases grupales</li>
-                        <li> <i class="fa fa-times" aria-hidden="true"></i> Acceso 24/7</li>
-                    </ul>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="title">
+                        <i class="fa fa-diamond" aria-hidden="true"></i>
+                        <h2>Premium</h2>
+                    </div>
+                    <div class="price">
+                        <h4><sup>€</sup>35.00</h4>
+                    </div>
+                    <div class="option">
+                        <ul>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a todos los gimnasios</li>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Entrenador personal</li>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Clases grupales</li>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso 24/7</li>
+                        </ul>
+                    </div>
                 </div>
-                <a href="#">Seleccionar</a>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card text-center">
-                <div class="title">
-                    <i class="fa fa-heart" aria-hidden="true"></i>
-                    <h2>Recomendada</h2>
-                </div>
-                <div class="price">
-                    <h4><sup>€</sup>30.00</h4>
-                </div>
-                <div class="option">
-                    <ul>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a 50 gimnasios</li>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Entrenador personal</li>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Clases grupales</li>
-                        <li> <i class="fa fa-times" aria-hidden="true"></i> Acceso 24/7</li>
-                    </ul>
-                </div>
-                <a href="#">Seleccionar</a>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <label class="radio-label">
+                    <input type="radio" id="basica" name="cuota" value="Básica" required>
+                    <span class="custom-radio"></span> Básica
+                </label>
+                <label class="radio-label">
+                    <input type="radio" id="recomendada" name="cuota" value="Recomendada" required>
+                    <span class="custom-radio"></span> Recomendada
+                </label>
+                <label class="radio-label">
+                    <input type="radio" id="premium" name="cuota" value="Premium" required>
+                    <span class="custom-radio"></span> Premium
+                </label>
+                <br>
+                <button type="submit" class="btn btn-orange">Seleccionar</button>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card text-center">
-                <div class="title">
-                    <i class="fa fa-diamond" aria-hidden="true"></i> <!-- Cambiado a un diamante -->
-                    <h2>Premium</h2>
-                </div>
-                <div class="price">
-                    <h4><sup>€</sup>35.00</h4>
-                </div>
-                <div class="option">
-                    <ul>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a todos los gimnasios</li>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Entrenador personal</li>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Clases grupales</li>
-                        <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso 24/7</li>
-                    </ul>
-                </div>
-                <a href="#">Seleccionar</a>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
 </div>
-</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

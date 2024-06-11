@@ -1,13 +1,14 @@
 <?php
 session_start(); // Iniciar la sesión
 
-// Verificar si se ha enviado el formulario y se ha seleccionado una ciudad
 if(isset($_POST['city'])) {
-    $_SESSION['city'] = $_POST['city']; // Establecer la ciudad seleccionada en la sesión
-    header("Location: ./prices.php"); // Redirigir a prices.php
+    // Si se ha seleccionado una ciudad, almacenarla en la sesión
+    $_SESSION['city'] = $_POST['city'];
+    header("Location: ./prices.php");
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,6 @@ if(isset($_POST['city'])) {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<section>
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
@@ -44,7 +44,7 @@ if(isset($_POST['city'])) {
     </div>
     <div class="row">
         <div class="col-sm-12">
-            <form id="city-form" action="" method="post"> <!-- Eliminado action para que envíe a sí mismo -->
+            <form id="city-form" action="./center.php" method="post"> <!-- Corregido action para enviar a center.php -->
                 <div class="form-group">
                     <label for="city-select">Selecciona tu ciudad:</label>
                     <select class="form-control" id="city-select" name="city">
@@ -65,11 +65,9 @@ if(isset($_POST['city'])) {
                         ?>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Seleccionar</button>
-            </form>
+                <button type="submit" class="btn btn-primary btn-lg orange">Enviar</button>
         </div>
     </div>
 </div>
-</section>
 </body>
 </html>

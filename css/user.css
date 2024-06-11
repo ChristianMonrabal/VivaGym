@@ -20,8 +20,11 @@
     }
     
     .progress-bar-icons .fa-map-marker,
+    .progress-bar-icons .fa-money {
+    background-color: orange;
+    }
+    
     .progress-bar-icons .fa-user,
-    .progress-bar-icons .fa-money,
     .progress-bar-icons .fa-credit-card {
     background-color: grey;
     }
@@ -35,28 +38,22 @@
     
     .progress-bar {
     background-color: orange !important;
-    width: 0%;
+    width: 50%;
     border-radius: 10px;
     }
 
-    section{
-        width: 100%;
-        height: 100vh;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        padding: 140px 0;
-        }
+    .scrollable-form-container {
+        border: 2px solid orange;
+        border-radius: 10px;
+        max-height: 400px; /* Ajusta la altura máxima según sea necesario */
+        overflow-y: auto; /* Habilita el desplazamiento vertical cuando el contenido excede la altura máxima */
+        padding: 20px; /* Añade espacio interior para separar los campos del borde */
+    }
 
-/* Estilo para el contenedor de los centros */
-.center-list {
-    max-height: 400px; /* Altura máxima del contenedor */
-    overflow-y: auto; /* Permitir el desplazamiento vertical */
-    border: 1px solid orange; /* Borde naranja */
-    border-radius: 10px; /* Bordes redondeados */
-    padding: 10px; /* Espaciado interno */
-    margin-bottom: 20px; /* Margen inferior */
-}
+    .orange {
+        background-color: orange;
+    }
 
-.orange {
-    background-color: orange;
-}
+    .border-danger {
+        border: 1px solid red;
+    }
