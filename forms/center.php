@@ -65,7 +65,7 @@ if(isset($_POST['city'])) {
                         ?>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg orange">Enviar</button>
+                <button type="submit" class="btn btn-primary btn-lg orange">Siguiente</button>
         </div>
     </div>
 </div>

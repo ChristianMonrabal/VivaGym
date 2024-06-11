@@ -120,7 +120,7 @@ $selectedCity = $_SESSION['city'];
                     <span class="custom-radio"></span> Premium
                 </label>
                 <br>
-                <button type="submit" class="btn btn-orange">Seleccionar</button>
+                <button type="submit" class="btn btn-orange">Siguiente</button>
             </div>
         </div>
     </form>

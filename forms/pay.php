@@ -1,9 +1,9 @@
 <?php
-session_start(); // Iniciar la sesión
+session_start();
 
-// Verificar si no se han enviado todos los datos necesarios
 if(empty($_POST['nombre']) || empty($_POST['apellidos']) || empty($_POST['dni']) || empty($_POST['email']) || empty($_POST['contraseña']) || empty($_POST['sexo']) || empty($_POST['numero_telefono']) || empty($_POST['fecha_nacimiento']) || empty($_POST['pais']) || empty($_POST['codigo_postal']) || empty($_POST['ciudad']) || empty($_POST['cuota']))
 {
+    header("Location: ./user.php"); 
     exit();
 }
 
@@ -21,7 +21,7 @@ $ciudad = $_POST['ciudad'];
 $selectedCuota = $_POST['cuota'];
 
 $_SESSION['cuota'] = $selectedCuota;
-$selectedCity = $_POST['ciudad']; // Corrected variable name
+$selectedCity = $_POST['ciudad'];
 $_SESSION['city'] = $selectedCity;
 ?>
 
@@ -92,8 +92,9 @@ $_SESSION['city'] = $selectedCity;
                 </div>
             </div>
         </form>
-<script src="../js/forms.js"></script>
+<script src="../js/pay.js"></script>
 </div>
 </div>
 </body>
 </html>
+

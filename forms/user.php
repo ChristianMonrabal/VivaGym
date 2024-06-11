@@ -122,7 +122,7 @@ $selectedCuota = $_SESSION['cuota'];
                     </div>
                     <div class="row">
                         <div class="col-sm-12 text-center">
-                            <button type="submit" class="btn btn-primary btn-lg orange">Enviar</button>
+                            <button type="submit" class="btn btn-primary btn-lg orange">Siguiente</button>
                         </div>
                     </div>
                 </form>
