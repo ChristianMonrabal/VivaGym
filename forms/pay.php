@@ -93,7 +93,7 @@ $_SESSION['city'] = $selectedCity;
             <!-- Botón de envío -->
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <button type="submit" class="btn btn-lg orange">Enviar</button>
+                    <button type="submit" class="btn btn-lg orange">Finalizar</button>
                 </div>
             </div>
         </form>

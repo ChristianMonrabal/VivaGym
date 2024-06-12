@@ -29,7 +29,7 @@ $selectedCuota = $_SESSION['cuota'];
     <link rel="stylesheet" href="../css/user.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="../js/forms.js"></script>
+    <script src="../js/user.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -126,7 +126,7 @@ $selectedCuota = $_SESSION['cuota'];
                 </div>
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <button type="submit" class="btn btn-lg orange">Siguiente</button>
+                        <button type="submit" class="btn btn-lg orange">Enviar</button>
                     </div>
                 </div>
             </form>

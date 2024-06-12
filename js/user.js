@@ -62,43 +62,6 @@ $(document).ready(function () {
                         $this.siblings("#edad-error").hide();
                     }
                 }
-
-                // Validar el número de tarjeta bancaria
-                if (id === "numero_tarjeta") {
-                    var cardNumberPattern = /^\d{16}$/;
-                    if (!cardNumberPattern.test(value)) {
-                        isValid = false;
-                        $this.siblings("#numero-tarjeta-error").show().text("El número de tarjeta debe tener 16 dígitos");
-                        $this.addClass("border-danger");
-                    } else {
-                        $this.siblings("#numero-tarjeta-error").hide();
-                    }
-                }
-
-                // Validar la fecha de caducidad
-                if (id === "fecha_caducidad_tarjeta") {
-                    var expirationDate = new Date(value);
-                    var currentDate = new Date();
-                    if (expirationDate < currentDate) {
-                        isValid = false;
-                        $this.siblings("#fecha-caducidad-error").show().text("La tarjeta está caducada");
-                        $this.addClass("border-danger");
-                    } else {
-                        $this.siblings("#fecha-caducidad-error").hide();
-                    }
-                }
-
-                // Validar el CVV
-                if (id === "cvv_tarjeta") {
-                    var cvvPattern = /^\d{3}$/;
-                    if (!cvvPattern.test(value)) {
-                        isValid = false;
-                        $this.siblings("#cvv-error").show().text("El CVV debe tener 3 dígitos");
-                        $this.addClass("border-danger");
-                    } else {
-                        $this.siblings("#cvv-error").hide();
-                    }
-                }
             }
         });
 
