@@ -51,7 +51,8 @@
     }
 
     .orange {
-        background-color: orange;
+        background-color: orange !important;
+        color: #fff !important;
     }
 
     .border-danger {

@@ -26,7 +26,7 @@ if(isset($_POST['city'])) {
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="text-center title-header">Selecciona tu ciudad</h2>
+            <h2 class="title-header">Selecciona tu ciudad</h2>
         </div>
     </div>
     <div class="row">
@@ -42,30 +42,33 @@ if(isset($_POST['city'])) {
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-sm-12">
-            <form id="city-form" action="./center.php" method="post"> <!-- Corregido action para enviar a center.php -->
+            <form id="city-form" action="./center.php" method="post" class="border-orange form-max-width">
                 <div class="form-group">
                     <label for="city-select">Selecciona tu ciudad:</label>
                     <select class="form-control" id="city-select" name="city">
                         <?php
                         // Incluir archivo de conexión
                         include "../includes/conexion.php";
-                        // Consultar todas las ciudades
-                        $sql = "SELECT DISTINCT ciudad FROM Establecimientos";
+                        // Consultar todas las ciudades y sus centros con direcciones
+                        $sql = "SELECT DISTINCT ciudad, nombre, direccion FROM Establecimientos";
                         $result = $conn->query($sql);
                         // Verificar si hay resultados
                         if ($result->num_rows > 0) {
-                            // Mostrar opciones de ciudad
+                            // Mostrar opciones de ciudad con centros y direcciones
                             while($row = $result->fetch_assoc()) {
-                                echo "<option value='" . $row["ciudad"] . "'>" . $row["ciudad"] . "</option>";
+                                echo "<option value='" . $row["ciudad"] . "'>" . $row["ciudad"] . " - " . $row["nombre"] . " - " . $row["direccion"] . "</option>";
                             }
                         }
                         $conn->close();
                         ?>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg orange">Siguiente</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-lg orange">Siguiente</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -213,3 +213,75 @@ margin-bottom: 30px;
     top: 3px;
     left: 3px;
 }
+
+/* Estilos para los inputs de radio personalizados */
+.radio-label {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 15px; /* Margen inferior para separación entre elementos */
+}
+
+/* Ocultar el input de radio original */
+.radio-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Crear un círculo personalizado para el input de radio */
+.custom-radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+    border-radius: 50%;
+    border: 2px solid orange;
+}
+
+/* Estilo del círculo cuando el input de radio está seleccionado */
+.radio-label input[type="radio"]:checked + .custom-radio {
+    background-color: orange;
+}
+
+/* Estilo del círculo dentro del círculo personalizado cuando está seleccionado */
+.radio-label input[type="radio"]:checked + .custom-radio:after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+    transform: translate(-50%, -50%);
+}
+
+/* Contenedor para los radio buttons con margen superior */
+.radio-container {
+    margin-top: 60px;
+}
+
+.btn-orange {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: darkorange !important;
+    color:#fff !important;
+}

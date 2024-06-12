@@ -36,7 +36,9 @@ $selectedCity = $_SESSION['city'];
                 <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="progress-bar-icons">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <a href="./center.php" class="icon-link">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                </a>
                 <i class="fa fa-money" aria-hidden="true"></i>
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <i class="fa fa-credit-card" aria-hidden="true"></i>
@@ -50,7 +52,7 @@ $selectedCity = $_SESSION['city'];
             <div class="col-sm-4">
                 <div class="card text-center">
                     <div class="title">
-                        <i class="fa fa-dumbbell" aria-hidden="true"></i>
+                        <i class="fa fa-lock" aria-hidden="true"></i>
                         <h2>Básica</h2>
                     </div>
                     <div class="price">
@@ -96,7 +98,7 @@ $selectedCity = $_SESSION['city'];
                     </div>
                     <div class="option">
                         <ul>
-                            <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a todos los gimnasios</li>
+                            <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso a 100 gimnasios</li>
                             <li> <i class="fa fa-check" aria-hidden="true"></i> Entrenador personal</li>
                             <li> <i class="fa fa-check" aria-hidden="true"></i> Clases grupales</li>
                             <li> <i class="fa fa-check" aria-hidden="true"></i> Acceso 24/7</li>
@@ -106,23 +108,24 @@ $selectedCity = $_SESSION['city'];
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 text-center">
-                <label class="radio-label">
-                    <input type="radio" id="basica" name="cuota" value="Básica" required>
-                    <span class="custom-radio"></span> Básica
-                </label>
-                <label class="radio-label">
-                    <input type="radio" id="recomendada" name="cuota" value="Recomendada" required>
-                    <span class="custom-radio"></span> Recomendada
-                </label>
-                <label class="radio-label">
-                    <input type="radio" id="premium" name="cuota" value="Premium" required>
-                    <span class="custom-radio"></span> Premium
-                </label>
-                <br>
-                <button type="submit" class="btn btn-orange">Siguiente</button>
-            </div>
-        </div>
+    <div class="col-sm-12 text-center radio-container">
+        <label class="radio-label">
+            <input type="radio" id="basica" name="cuota" value="Básica" required>
+            <span class="custom-radio"></span> Básica
+        </label>
+        <label class="radio-label">
+            <input type="radio" id="recomendada" name="cuota" value="Recomendada" required>
+            <span class="custom-radio"></span> Recomendada
+        </label>
+        <label class="radio-label">
+            <input type="radio" id="premium" name="cuota" value="Premium" required>
+            <span class="custom-radio"></span> Premium
+        </label>
+        <br>
+        <button type="submit" class="btn btn-orange">Siguiente</button>
+    </div>
+</div>
+
     </form>
 </div>
 </div>

@@ -61,5 +61,6 @@ padding: 140px 0;
 }
 
 .orange {
-    background-color: orange;
+    background-color: orange !important;
+    color: #fff !important;
 }
