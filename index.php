@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (isset($_GET['action']) && $_GET['action'] == 'logout') {
+    $_SESSION = array();
+    session_destroy();
+    header("location: ./index.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,13 +61,11 @@
                             echo '<a class="dropdown-item" href="https://www.google.com/maps/search/?api=1&query=' . urlencode($establecimiento['direccion']) . '" target="_blank">' . $establecimiento['nombre'] . ' - ' . $establecimiento['direccion'] . '</a>';
                         }
 
-                        echo '</div>'; // Cierre de dropdown-menu
+                        echo '</div>';
                     }
-
-                    // Cerrar conexión
                     $conn->close();
                     ?>
-                </div> <!-- Cierre de dropdown-menu -->
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Empleo</a>
@@ -67,11 +76,24 @@
             <li class="nav-item">
                 <a class="btn btn-orange" href="./forms/center.php">Inscríbete</a>
             </li>
+            <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle user" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?php echo htmlspecialchars($_SESSION['email']); ?>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="./perfil.php">Perfil</a>
+                        <a class="dropdown-item" href="?action=logout">Cerrar sesión</a>
+                    </div>
+                </li>
+            <?php else: ?>
+                <li class="nav-item">
+                    <a class="btn btn-signin" href="./forms/signin.php">Iniciar sesión</a>
+                </li>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
-
-
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="3000">
     <div class="carousel-inner">
@@ -130,7 +152,6 @@
         </div>
     </div>
 </footer>
-
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

@@ -62,6 +62,42 @@ $(document).ready(function () {
                         $this.siblings("#edad-error").hide();
                     }
                 }
+
+                // Validar el campo de DNI
+                if (id === "dni") {
+                    var dniPattern = /^[0-9]{7,8}[A-Za-z]$/;
+                    if (!dniPattern.test(value)) {
+                        isValid = false;
+                        $this.siblings(".error").show().text("El DNI debe tener entre 7 y 8 números seguidos de una letra");
+                        $this.addClass("border-danger");
+                    } else {
+                        var dniNumber = value.substring(0, value.length - 1);
+                        var dniLetter = value.substring(value.length - 1).toUpperCase();
+                        var letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
+                        var letterCorrect = letters.charAt(parseInt(dniNumber) % 23);
+
+                        if (dniLetter !== letterCorrect) {
+                            isValid = false;
+                            $this.siblings(".error").show().text("La letra del DNI no es válida");
+                            $this.addClass("border-danger");
+                        } else {
+                            $this.siblings(".error").hide();
+                        }
+                    }
+                }
+
+                // Validar el campo de Código Postal
+                if (id === "codigo_postal") {
+                    var postalPattern = /^\d{5}$/;
+                    if (!postalPattern.test(value)) {
+                        isValid = false;
+                        $this.siblings(".error").show().text("El código postal debe tener 5 dígitos");
+                        $this.addClass("border-danger");
+                    } else {
+                        $this.siblings(".error").hide();
+                    }
+                }
+
             }
         });
 

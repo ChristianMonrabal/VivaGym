@@ -22,6 +22,7 @@ $selectedCuota = $_POST['cuota'];
 $_SESSION['cuota'] = $selectedCuota;
 $selectedCity = $_POST['ciudad'];
 $_SESSION['city'] = $selectedCity;
+
 ?>
 
 

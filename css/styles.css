@@ -26,6 +26,17 @@
     margin-left: 60%;
 }
 
+.btn-signin {
+    background-color: black; /* Color de fondo azul */
+    color: white !important; /* Color del texto blanco */
+    border: 2px solid black; /* Borde sólido de 2px de ancho y color negro */
+    border-radius: 20px; /* Borde redondeado de 20px */
+    padding: 10px 20px; /* Espaciado interno */
+    margin-left: 60px; /* Ajusta el margen izquierdo según sea necesario */
+}
+
+
+
 .btn-orange:hover {
     background-color: #E55A00;
 }
@@ -96,4 +107,13 @@
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.user {
+    margin-left: 52%;
+    color: black !important;
+}
+
+.orange {
+    background-color: #FF6200 !important;
 }

@@ -52,7 +52,7 @@ if(isset($_POST['city'])) {
                         // Incluir archivo de conexión
                         include "../includes/conexion.php";
                         // Consultar todas las ciudades y sus centros con direcciones
-                        $sql = "SELECT DISTINCT ciudad, nombre, direccion FROM Establecimientos";
+                        $sql = "SELECT DISTINCT id ciudad, nombre, direccion FROM Establecimientos";
                         $result = $conn->query($sql);
                         // Verificar si hay resultados
                         if ($result->num_rows > 0) {

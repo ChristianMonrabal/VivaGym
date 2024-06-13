@@ -73,18 +73,37 @@ $conn->close();
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
+<style>
+    body {
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .btn-primary {
+        background-color: #ff6600;
+        border-color: #ff6600;
+    }
+
+    .btn-primary:hover {
+        background-color: #cc5500;
+        border-color: #cc5500;
+    }
+</style>
 </head>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="text-center">Registro Completado</h2>
-            <p class="text-center">Gracias por registrarte en VivaGym.</p>
+            <p class="text-center">¡Gracias por registrarte en VivaGym!</p>
             <div class="text-center">
-                <a href="index.php" class="btn btn-primary">Volver al inicio</a>
+                <a href="../index.php" class="btn btn-primary">Volver al inicio</a>
             </div>
         </div>
     </div>
 </div>
 </body>
 </html>
+

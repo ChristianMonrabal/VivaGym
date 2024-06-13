@@ -1,4 +1,5 @@
 <?php
+include "../includes/conexion.php";
 session_start(); // Iniciar la sesión
 
 // Verificar si no se ha seleccionado una ciudad
@@ -8,6 +9,17 @@ if(!isset($_SESSION['city'])) {
 }
 
 $selectedCity = $_SESSION['city'];
+
+$sql = "SELECT id, nombre FROM Tarifas ORDER BY id ASC";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $tarifas = $result->fetch_all(MYSQLI_ASSOC);
+} else {
+    $tarifas = [];
+}
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -107,22 +119,20 @@ $selectedCity = $_SESSION['city'];
                 </div>
             </div>
         </div>
-        <div class="row">
-    <div class="col-sm-12 text-center radio-container">
-        <label class="radio-label">
-            <input type="radio" id="basica" name="cuota" value="Básica" required>
-            <span class="custom-radio"></span> Básica
-        </label>
-        <label class="radio-label">
-            <input type="radio" id="recomendada" name="cuota" value="Recomendada" required>
-            <span class="custom-radio"></span> Recomendada
-        </label>
-        <label class="radio-label">
-            <input type="radio" id="premium" name="cuota" value="Premium" required>
-            <span class="custom-radio"></span> Premium
-        </label>
-        <br>
-        <button type="submit" class="btn btn-orange">Siguiente</button>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-center radio-container">
+            <form action="./prices.php" method="post">
+                <?php foreach ($tarifas as $tarifa): ?>
+                    <label class="radio-label">
+                        <input type="radio" id="<?php echo strtolower($tarifa['nombre']); ?>" name="cuota" value="<?php echo $tarifa['nombre']; ?>" required>
+                        <span class="custom-radio"></span> <?php echo $tarifa['nombre']; ?>
+                    </label>
+                <?php endforeach; ?>
+                <br>
+                <button type="submit" class="btn btn-orange">Siguiente</button>
+            </form>
+        </div>
     </div>
 </div>
 

@@ -34,10 +34,8 @@ CREATE TABLE Usuarios (
     numero_tarjeta VARCHAR(20) NOT NULL,
     fecha_caducidad_tarjeta DATE NOT NULL,
     cvv_tarjeta VARCHAR(4) NOT NULL,
-    establecimiento_id INT,
-    FOREIGN KEY (establecimiento_id) REFERENCES Establecimientos(id)
+    establecimiento_id INT
 );
-
 -- Inserciones en la tabla Establecimientos
 INSERT INTO Establecimientos (id, nombre, ciudad, direccion) VALUES
 (1, 'VivaGym Madrid', 'Madrid', 'Calle de Alcalá, 200'),
@@ -145,3 +143,7 @@ INSERT INTO Tarifas (nombre, precio) VALUES
 ('Básica', 25.00),
 ('Zone', 30.00),
 ('Premium', 35.00);
+
+use VivaGym;
+delete from Usuarios where id = 7;
+select * from Usuarios;
