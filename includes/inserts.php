@@ -1,10 +1,8 @@
 <?php
 session_start(); // Iniciar la sesión
 
-// Incluir el archivo de conexión
-require_once './conexion.php'; // Asegúrate de que la ruta sea correcta
+require_once './conexion.php';
 
-// Verificar si no se han enviado todos los datos necesarios
 if (
     empty($_POST['nombre']) || empty($_POST['apellidos']) || empty($_POST['dni']) || 
     empty($_POST['email']) || empty($_POST['contraseña']) || empty($_POST['sexo']) || 
@@ -16,12 +14,11 @@ if (
     exit();
 }
 
-// Obtener los datos recibidos del formulario
 $nombre = $_POST['nombre'];
 $apellidos = $_POST['apellidos'];
 $dni = $_POST['dni'];
 $email = $_POST['email'];
-$contraseña = password_hash($_POST['contraseña'], PASSWORD_BCRYPT); // Encriptar la contraseña
+$contraseña = password_hash($_POST['contraseña'], PASSWORD_BCRYPT);
 $sexo = $_POST['sexo'];
 $numero_telefono = $_POST['numero_telefono'];
 $fecha_nacimiento = $_POST['fecha_nacimiento'];
@@ -34,7 +31,6 @@ $fecha_caducidad_tarjeta = $_POST['fecha_caducidad_tarjeta'];
 $cvv_tarjeta = $_POST['cvv_tarjeta'];
 
 try {
-    // Preparar la inserción en la base de datos
     $sql = "INSERT INTO Usuarios (nombre, apellidos, dni, email, contraseña, sexo, numero_telefono, fecha_nacimiento, pais, codigo_postal, ciudad, numero_tarjeta, fecha_caducidad_tarjeta, cvv_tarjeta, establecimiento_id) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
@@ -43,23 +39,19 @@ try {
         throw new Exception('Error en la preparación de la consulta: ' . $conn->error);
     }
 
-    // Vincular los parámetros
     $stmt->bind_param("ssssssssssssssi", $nombre, $apellidos, $dni, $email, $contraseña, $sexo, $numero_telefono, $fecha_nacimiento, $pais, $codigo_postal, $ciudad, $numero_tarjeta, $fecha_caducidad_tarjeta, $cvv_tarjeta, $selectedCuota);
 
-    // Ejecutar la consulta
     if ($stmt->execute()) {
-        echo "Registro completado con éxito";
+        echo "";
     } else {
         throw new Exception('Error en la ejecución de la consulta: ' . $stmt->error);
     }
 
-    // Cerrar la declaración
     $stmt->close();
 } catch (Exception $e) {
     echo 'Excepción capturada: ',  $e->getMessage(), "\n";
 }
 
-// Cerrar la conexión
 $conn->close();
 ?>
 

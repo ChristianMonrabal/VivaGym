@@ -143,7 +143,3 @@ INSERT INTO Tarifas (nombre, precio) VALUES
 ('Básica', 25.00),
 ('Zone', 30.00),
 ('Premium', 35.00);
-
-use VivaGym;
-delete from Usuarios where id = 7;
-select * from Usuarios;

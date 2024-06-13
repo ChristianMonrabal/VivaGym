@@ -1,78 +1,84 @@
 <?php
-// Iniciar la sesión
 session_start();
-
-// Verificar si el usuario ya ha iniciado sesión, si es así, redirigirlo a index.php
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    header("location: ../index.php");
-    exit;
-}
 
 // Incluir el archivo de conexión a la base de datos
 require_once '../includes/conexion.php';
 
 // Definir variables e inicializar con valores vacíos
-$email = $password = "";
+$dni = $email = $new_password = "";
 $error_message = "";
 
-// Procesar datos del formulario cuando se envía el formulario
+// Procesar datos del formulario cuando se envía
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Validar correo electrónico y contraseña
-    if (empty(trim($_POST["email"])) || empty(trim($_POST["password"]))) {
-        $error_message = "Por favor, ingresa tu correo electrónico y contraseña.";
+    // Validar el DNI, correo electrónico y la nueva contraseña
+    if (empty(trim($_POST["dni"])) || empty(trim($_POST["email"])) || empty(trim($_POST["new_password"]))) {
+        $error_message = "Por favor, completa todos los campos.";
     } else {
+        $dni = trim($_POST["dni"]);
         $email = trim($_POST["email"]);
-        $password = trim($_POST["password"]);
+        $new_password = trim($_POST["new_password"]);
     }
 
-    // Verificar si no hay errores de entrada antes de procesar la consulta
+    // Verificar si no hay errores antes de proceder con la actualización de la contraseña
     if (empty($error_message)) {
-        // Preparar la consulta SQL
-        $sql = "SELECT id, email, contraseña FROM Usuarios WHERE email = ?";
-
+        // Preparar la consulta SQL para verificar la existencia del usuario
+        $sql = "SELECT id, dni, email FROM Usuarios WHERE dni = ? AND email = ?";
+        
         if ($stmt = $conn->prepare($sql)) {
             // Vincular variables a la declaración preparada como parámetros
-            $stmt->bind_param("s", $param_email);
-
+            $stmt->bind_param("ss", $param_dni, $param_email);
+            
             // Establecer parámetros
+            $param_dni = $dni;
             $param_email = $email;
-
-            // Intentar ejecutar la declaración preparada
+            
+            // Ejecutar la declaración preparada
             if ($stmt->execute()) {
                 // Almacenar el resultado
                 $stmt->store_result();
-
-                // Verificar si el correo electrónico existe, si es así, verificar la contraseña
+                
+                // Verificar si hay un usuario con el DNI y correo electrónico proporcionados
                 if ($stmt->num_rows == 1) {
                     // Vincular variables de resultado
-                    $stmt->bind_result($id, $email, $hashed_password);
-                    if ($stmt->fetch()) {
-                        if (password_verify($password, $hashed_password)) {
-                            // Contraseña correcta, iniciar sesión
-                            session_start();
+                    $stmt->bind_result($id, $dni, $email);
+                    $stmt->fetch();
 
-                            // Almacenar datos de sesión
+                    // Preparar la consulta SQL para actualizar la contraseña
+                    $update_sql = "UPDATE Usuarios SET contraseña = ? WHERE dni = ? AND email = ?";
+                    
+                    if ($update_stmt = $conn->prepare($update_sql)) {
+                        // Hashear la nueva contraseña
+                        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+                        
+                        // Vincular variables a la declaración preparada como parámetros
+                        $update_stmt->bind_param("sss", $hashed_password, $param_dni, $param_email);
+                        
+                        // Ejecutar la declaración preparada para actualizar la contraseña
+                        if ($update_stmt->execute()) {
+                            // Iniciar sesión automáticamente
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["email"] = $email;
-
+                            
                             // Redirigir al usuario a la página de inicio
                             header("location: ../index.php");
                             exit;
                         } else {
-                            $error_message = "Correo o contraseña incorrectos.";
+                            $error_message = "Algo salió mal. Por favor, inténtalo de nuevo más tarde.";
                         }
                     }
                 } else {
-                    $error_message = "No se encontró una cuenta con ese correo electrónico.";
+                    $error_message = "No se encontró un usuario con el DNI y correo electrónico proporcionados.";
                 }
             } else {
                 $error_message = "Algo salió mal. Por favor, inténtalo de nuevo más tarde.";
             }
+            // Cerrar la declaración
             $stmt->close();
         }
     }
+    // Cerrar la conexión
     $conn->close();
 }
 ?>
@@ -82,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicia sesión en VivaGym</title>
+    <title>Actualiza tu contraseña</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -106,22 +112,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php
                     include '../includes/conexion.php';
 
-                    // Consulta SQL para obtener las ciudades
                     $ciudades_sql = "SELECT DISTINCT ciudad FROM Establecimientos";
                     $ciudades_resultado = $conn->query($ciudades_sql);
-
-                    // Variable para generar un ID único para cada ciudad
                     $ciudad_index = 0;
 
                     while ($ciudad = $ciudades_resultado->fetch_assoc()) {
                         $ciudad_id = strtolower(str_replace(' ', '_', $ciudad['ciudad']));
-                        $ciudad_index++; // Incrementar el índice para generar un ID único
+                        $ciudad_index++;
 
-                        // Generar un ID único y establecerlo como aria-labelledby para el elemento de la ciudad
                         echo '<a class="dropdown-item dropdown-toggle" href="#" id="ciudad_' . $ciudad_index . '" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' . $ciudad['ciudad'] . '</a>';
                         echo '<div class="dropdown-menu" aria-labelledby="ciudad_' . $ciudad_index . '">';
 
-                        // Consulta SQL para obtener los establecimientos de la ciudad actual
                         $establecimientos_sql = "SELECT nombre, direccion FROM Establecimientos WHERE ciudad = '{$ciudad['ciudad']}'";
                         $establecimientos_resultado = $conn->query($establecimientos_sql);
 
@@ -168,18 +169,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title mb-4 text-center">Inicia sesión en VivaGym</h2>
+                        <h2 class="card-title mb-4 text-center">Actualiza tu contraseña</h2>
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                            <div class="form-group">
+                                <label for="dni">DNI:</label>
+                                <input type="text" class="form-control" id="dni" name="dni" value="<?php echo htmlspecialchars($dni); ?>">
+                            </div>
                             <div class="form-group">
                                 <label for="email">Correo Electrónico:</label>
                                 <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
                             </div>
                             <div class="form-group">
-                                <label for="password">Contraseña:</label>
+                                <label for="new_password">Nueva Contraseña:</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="password" name="password">
+                                    <input type="password" class="form-control" id="new_password" name="new_password">
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <button class="btn btn-outline-secondary" type="button" id="new_togglePassword">
                                             <i class="fa fa-eye"></i>
                                         </button>
                                     </div>
@@ -190,15 +195,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     echo '<div class="alert alert-danger">' . $error_message . '</div>';
                                 } 
                             ?>
-                            <button type="submit" class="btn btn-primary btn-lg btn-block orange">Iniciar Sesión</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block orange">Actualizar Contraseña</button>
                         </form>
-                        <p class="mt-3 mb-0 text-center">¿Has olvidado la contraseña? <a href="./update_password.php">Cámbiala ahora</a>.</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</body>
 <script src="../js/main.js"></script>
 <script src="../js/toggle_password.js"></script>
-</body>
 </html>

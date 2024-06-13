@@ -84,6 +84,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
                         <a class="dropdown-item" href="./perfil.php">Perfil</a>
                         <a class="dropdown-item" href="?action=logout">Cerrar sesión</a>
+                        <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#confirmDeleteModal">Borrar cuenta</a>
                     </div>
                 </li>
             <?php else: ?>
@@ -139,6 +140,26 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
             <img src="./img/horario.png">
             <h4>Amplio horario de apertura</h4>
             <p>¡Ven cuando quieras! En VivaGym abrimos 363 días al año con un amplio horario de apertura. ¡Todas las opciones están a tu alcance!</p>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación de cuenta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas borrar tu cuenta? Esto anulará tu suscripción.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="./includes/drops.php" class="btn btn-danger">Borrar cuenta</a>
+            </div>
         </div>
     </div>
 </div>
