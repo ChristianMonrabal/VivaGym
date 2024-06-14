@@ -78,7 +78,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                         <?php echo htmlspecialchars($_SESSION['email']); ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="./perfil.php">Perfil</a>
+                        <a class="dropdown-item" href="./forms/actualizar_user.php">Actualizar perfil</a>
                         <a class="dropdown-item" href="?action=logout">Cerrar sesión</a>
                         <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#confirmDeleteModal">Borrar cuenta</a>
                     </div>

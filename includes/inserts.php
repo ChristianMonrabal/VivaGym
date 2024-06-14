@@ -41,12 +41,6 @@ try {
 
     $stmt->bind_param("ssssssssssssssi", $nombre, $apellidos, $dni, $email, $contraseña, $sexo, $numero_telefono, $fecha_nacimiento, $pais, $codigo_postal, $ciudad, $numero_tarjeta, $fecha_caducidad_tarjeta, $cvv_tarjeta, $selectedCuota);
 
-    if ($stmt->execute()) {
-        echo "";
-    } else {
-        throw new Exception('Error en la ejecución de la consulta: ' . $stmt->error);
-    }
-
     $stmt->close();
 } catch (Exception $e) {
     echo 'Excepción capturada: ',  $e->getMessage(), "\n";
@@ -54,6 +48,7 @@ try {
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html>
