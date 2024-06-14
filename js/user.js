@@ -54,9 +54,9 @@ $(document).ready(function () {
                 // Validar la fecha de nacimiento
                 if (id === "fecha_nacimiento") {
                     var birthYear = parseInt(value.split("-")[0]);
-                    if (currentYear - birthYear < 18) {
+                    if (currentYear - birthYear < 16) {
                         isValid = false;
-                        $this.siblings("#edad-error").show().text("Debe ser mayor de 18 años");
+                        $this.siblings("#edad-error").show().text("Debe ser mayor de 16 años");
                         $this.addClass("border-danger");
                     } else {
                         $this.siblings("#edad-error").hide();

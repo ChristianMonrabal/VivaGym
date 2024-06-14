@@ -4,7 +4,7 @@ session_start();
 if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     $_SESSION = array();
     session_destroy();
-    header("location: ./index.php");
+    header("location: ../index.php");
     exit;
 }
 ?>
@@ -16,31 +16,31 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VivaGym</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="shortcut icon" href="./img/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
+    <script src="../js/main.js"></script>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="navbar">
-    <a class="navbar-brand" href="#">
-        <img src="./img/icon.png" class="d-inline-block align-top" alt="VivaGym Logo">
+    <a class="navbar-brand" href="../index.php">
+        <img src="../img/icon.png" class="d-inline-block align-top" alt="VivaGym Logo">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" onmouseover="mostrarEstablecimientos(this)">
                 <a class="nav-link dropdown-toggle" href="#" id="clubesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Clubes
                 </a>
                 <div class="dropdown-menu" aria-labelledby="clubesDropdown">
                 <?php
-                    include './includes/conexion.php';
+                    include '../includes/conexion.php';
 
                     $ciudades_sql = "SELECT DISTINCT ciudad FROM Establecimientos";
                     $ciudades_resultado = $conn->query($ciudades_sql);
-
                     $ciudad_index = 0;
 
                     while ($ciudad = $ciudades_resultado->fetch_assoc()) {
@@ -56,7 +56,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                         while ($establecimiento = $establecimientos_resultado->fetch_assoc()) {
                             echo '<a class="dropdown-item" href="https://www.google.com/maps/search/?api=1&query=' . urlencode($establecimiento['direccion']) . '" target="_blank">' . $establecimiento['nombre'] . ' - ' . $establecimiento['direccion'] . '</a>';
                         }
-
                         echo '</div>';
                     }
                     $conn->close();
@@ -64,13 +63,13 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/jobs.php">Empleo</a>
+                <a class="nav-link" href="./jobs.php">Empleo</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/help.php">Ayuda</a>
+                <a class="nav-link" href="./help.php">Ayuda</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Complementos</a>
+                <a class="btn btn-orange" href="../forms/center.php">Inscríbete</a>
             </li>
             <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <li class="nav-item dropdown">
@@ -78,70 +77,19 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                         <?php echo htmlspecialchars($_SESSION['email']); ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="./perfil.php">Perfil</a>
+                        <a class="dropdown-item" href="#">Perfil</a>
                         <a class="dropdown-item" href="?action=logout">Cerrar sesión</a>
                         <a class="dropdown-item text-danger" href="#" data-toggle="modal" data-target="#confirmDeleteModal">Borrar cuenta</a>
                     </div>
                 </li>
             <?php else: ?>
                 <li class="nav-item">
-                    <a class="btn btn-orange" href="./forms/center.php">Inscríbete</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-signin" href="./forms/signin.php">Iniciar sesión</a>
+                    <a class="btn btn-signin" href="../forms/signin.php">Iniciar sesión</a>
                 </li>
             <?php endif; ?>
         </ul>
     </div>
 </nav>
-
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="3000">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="./img/slider1.png" class="d-block w-100" alt="Slider 1">
-        </div>
-        <div class="carousel-item">
-            <img src="./img/slider2.png" class="d-block w-100" alt="Slider 2">
-        </div>
-        <div class="carousel-item">
-            <img src="./img/slider3.png" class="d-block w-100" alt="Slider 3">
-        </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-
-<div class="container">
-    <h2 class="text-center text-orange" id="vivagym">¿Por qué VivaGym?</h2>
-    <div class="row">
-        <div class="col-md-3 text-center">
-            <img src="./img/permanencia.png">
-            <h4>Sin permanencia</h4>
-            <p>Así es, en VivaGym tienes la máxima flexibilidad posible para darte de baja cuando desees ya que no tenemos permanencia mínima (¡sin letra pequeña!)</p>
-        </div>
-        <div class="col-md-3 text-center">
-            <img src="./img/instalacion.png">
-            <h4>Amplias instalaciones</h4>
-            <p>Te ofrecemos 7 zonas diferentes de entrenamiento para que hagas tu rutina como más te gusta. ¡Todo lo que necesitas para entrenar a tu manera!</p>
-        </div>
-        <div class="col-md-3 text-center">
-            <img src="./img/actividades.png">
-            <h4>Gran variedad de actividades dirigidas</h4>
-            <p>En VivaGym no hay lugar para el aburrimiento. Encuentra las mejores actividades dirigidas: Clases Les Mills, Zumba, Hyrox, Cycling… ¡vas a querer probar todas!</p>
-        </div>
-        <div class="col-md-3 text-center">
-            <img src="./img/horario.png">
-            <h4>Amplio horario de apertura</h4>
-            <p>¡Ven cuando quieras! En VivaGym abrimos 363 días al año con un amplio horario de apertura. ¡Todas las opciones están a tu alcance!</p>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -172,10 +120,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
         </div>
     </div>
 </footer>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="./js/main.js"></script>
-</body>
-</html>

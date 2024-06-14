@@ -91,7 +91,6 @@ $_SESSION['city'] = $selectedCity;
         <label for="cvv_tarjeta">CVV:</label>
         <input type="text" class="form-control" id="cvv_tarjeta" name="cvv_tarjeta" placeholder="Introduce el Card Verification Value">
         </div>
-            <!-- Botón de envío -->
             <div class="row">
                 <div class="col-sm-12 text-center">
                     <button type="submit" class="btn btn-lg orange">Finalizar</button>
