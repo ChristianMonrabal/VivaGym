@@ -36,6 +36,16 @@ CREATE TABLE Usuarios (
     cvv_tarjeta VARCHAR(4) NOT NULL,
     establecimiento_id INT
 );
+
+-- Crear la tabla Candidatos
+CREATE TABLE Candidatos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_completo VARCHAR(255) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    cv LONGBLOB NOT NULL
+);
+
 -- Inserciones en la tabla Establecimientos
 INSERT INTO Establecimientos (id, nombre, ciudad, direccion) VALUES
 (1, 'VivaGym Madrid', 'Madrid', 'Calle de Alcalá, 200'),

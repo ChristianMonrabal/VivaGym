@@ -1,20 +1,20 @@
 /* Navbar */
 .navbar {
     height: 80px;
-    background-color: rgba(255, 255, 255, 0.9); /* Color blanco con transparencia */
+    background-color: rgba(255, 255, 255, 0.9);
     transition: background-color 0.5s ease;
 }
 
 .navbar-nav .nav-item.dropdown .nav-link {
-    color: black; /* Cambia el color del texto a negro */
+    color: black;
 }
 
 .navbar-nav .nav-item .nav-link {
-    color: black; /* Cambia el color del texto a negro */
+    color: black;
 }
 
 .navbar-brand img {
-    max-height: 250px; /* Ajusta el tamaño del icono de la navbar */
+    max-height: 250px;
     padding-top: 20%;
 }
 
@@ -27,15 +27,13 @@
 }
 
 .btn-signin {
-    background-color: black; /* Color de fondo azul */
-    color: white !important; /* Color del texto blanco */
-    border: 2px solid black; /* Borde sólido de 2px de ancho y color negro */
-    border-radius: 20px; /* Borde redondeado de 20px */
-    padding: 10px 20px; /* Espaciado interno */
-    margin-left: 60px; /* Ajusta el margen izquierdo según sea necesario */
+    background-color: black;
+    color: white !important;
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 60px;
 }
-
-
 
 .btn-orange:hover {
     background-color: #E55A00;
@@ -116,4 +114,12 @@
 
 .orange {
     background-color: #FF6200 !important;
+}
+
+.btn-center {
+    padding-right: 30%;
+}
+
+.error {
+    color: red;
 }

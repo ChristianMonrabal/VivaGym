@@ -95,6 +95,26 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     </div>
 </nav>
 
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación de cuenta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas borrar tu cuenta? Esto anulará tu suscripción.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a href="./includes/drops.php" class="btn btn-danger">Borrar cuenta</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="3000">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -143,25 +163,43 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     </div>
 </div>
 
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación de cuenta</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas borrar tu cuenta? Esto anulará tu suscripción.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <a href="./includes/drops.php" class="btn btn-danger">Borrar cuenta</a>
+<div class="container mt-5">
+        <h2 class="text-center text-orange mb-4">¿Quieres trabajar con nosotros?</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container">
+                    <form id="jobForm" action="./includes/insert_candidatos.php" method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="nombreCompleto">Nombre Completo</label>
+                            <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto">
+                            <div class="error" id="errorNombreCompleto"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Número de Teléfono</label>
+                            <input type="tel" class="form-control" id="telefono" name="telefono">
+                            <div class="error" id="errorTelefono"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                            <div class="error" id="errorEmail"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cv">Subir Currículum (PDF o Word)</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="cv" name="cv" accept=".pdf,.doc,.docx">
+                                <label class="custom-file-label" for="cv">Elige archivo...</label>
+                            </div>
+                            <div class="error" id="errorCv"></div>
+                        </div>
+                        <div class="d-flex btn-center">
+                            <button type="submit" class="btn btn-orange">Enviar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 <footer class="footer">
     <div class="container">
@@ -177,5 +215,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="./js/main.js"></script>
+<script src="./js/user.js"></script>
 </body>
 </html>

@@ -106,3 +106,67 @@ $(document).ready(function () {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById('jobForm');
+
+    form.addEventListener('submit', function(event) {
+        let valid = true;
+
+        const nombreCompleto = document.getElementById('nombreCompleto');
+        const telefono = document.getElementById('telefono');
+        const email = document.getElementById('email');
+        const cv = document.getElementById('cv');
+
+        // Clear previous errors
+        clearErrors();
+
+        if (nombreCompleto.value.trim() === '') {
+            showError(nombreCompleto, 'errorNombreCompleto', 'El nombre completo es requerido');
+            valid = false;
+        }
+
+        if (telefono.value.trim() === '') {
+            showError(telefono, 'errorTelefono', 'El número de teléfono es requerido');
+            valid = false;
+        }
+
+        if (email.value.trim() === '') {
+            showError(email, 'errorEmail', 'El correo electrónico es requerido');
+            valid = false;
+        }
+
+        if (cv.value.trim() === '') {
+            showError(cv, 'errorCv', 'El currículum es requerido');
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+
+    function showError(input, errorElementId, message) {
+        input.classList.add('is-invalid');
+        const errorElement = document.getElementById(errorElementId);
+        errorElement.textContent = message;
+    }
+
+    function clearErrors() {
+        const inputs = document.querySelectorAll('.form-control, .custom-file-input');
+        inputs.forEach(input => {
+            input.classList.remove('is-invalid');
+        });
+
+        const errorElements = document.querySelectorAll('.error');
+        errorElements.forEach(errorElement => {
+            errorElement.textContent = '';
+        });
+    }
+});
+
+// Mostrar el nombre del archivo seleccionado
+$('.custom-file-input').on('change', function() {
+    var fileName = $(this).val().split('\\').pop();
+    $(this).next('.custom-file-label').addClass("selected").html(fileName);
+});
