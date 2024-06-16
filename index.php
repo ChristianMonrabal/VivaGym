@@ -64,13 +64,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./views/jobs.php">Empleo</a>
+                <a class="nav-link" href="./views/calendario.php">Calendario</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="./views/help.php">Ayuda</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Complementos</a>
             </li>
             <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <li class="nav-item dropdown">

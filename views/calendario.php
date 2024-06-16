@@ -14,7 +14,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VivaGym</title>
+    <title>VivaGym - Calendario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
@@ -63,14 +63,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./jobs.php">Empleo</a>
+                <a class="nav-link" href="#">Calendario</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="./help.php">Ayuda</a>
             </li>
-            <li class="nav-item">
-                <a class="btn btn-orange" href="../forms/center.php">Inscríbete</a>
-            </li>
+            <?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
+                <li class="nav-item">
+                    <a class="btn btn-orange" href="../forms/center.php">Inscríbete</a>
+                </li>
+            <?php endif; ?>
             <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle user" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,6 +113,75 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     </div>
 </div>
 
+<div class="container mt-5">
+    <h2 class="text-center text-orange calendar">Calendario de Clases</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Hora</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include '../includes/conexion.php';
+
+                $dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+                $horas = [
+                    '08:00:00', '09:00:00', '10:00:00', '11:00:00', '12:00:00',
+                    '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00',
+                    '18:00:00', '19:00:00', '20:00:00', '21:00:00'
+                ];
+
+                $colores_clases = [
+                    'Yoga' => 'yoga',
+                    'Pilates' => 'pilates',
+                    'Spinning' => 'spinning',
+                    'Zumba' => 'zumba',
+                    'Crossfit' => 'crossfit',
+                    'Boxeo' => 'boxeo'
+                ];
+
+                foreach ($horas as $hora) {
+                    echo '<tr>';
+                    echo '<td>' . $hora . '</td>';
+
+                    foreach ($dias_semana as $dia) {
+                        $sql = "SELECT actividad, duracion, monitor, descripcion, capacidad 
+                                FROM Calendario 
+                                WHERE dia_semana = '$dia' AND hora = '$hora'";
+                        $resultado = $conn->query($sql);
+
+                        if ($resultado->num_rows > 0) {
+                            $clase = $resultado->fetch_assoc();
+                            $clase_color = isset($colores_clases[$clase['actividad']]) ? $colores_clases[$clase['actividad']] : 'default';
+                            echo '<td class="' . $clase_color . '">';
+                            echo '<strong>' . $clase['actividad'] . '</strong><br>';
+                            echo 'Duración: ' . $clase['duracion'] . ' min<br>';
+                            echo 'Monitor: ' . $clase['monitor'] . '<br>';
+                            echo 'Capacidad: ' . $clase['capacidad'] . ' personas<br>';
+                            echo '<em>' . $clase['descripcion'] . '</em>';
+                            echo '</td>';
+                        } else {
+                            echo '<td>-</td>';
+                        }
+                    }
+
+                    echo '</tr>';
+                }
+
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -124,3 +195,5 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="./js/main.js"></script>
+</body>
+</html>

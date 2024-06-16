@@ -123,3 +123,25 @@
 .error {
     color: red;
 }
+
+.banner-help {
+    width: 100%;
+    padding-top: 5%;
+}
+
+.center {
+    margin-left: 0%;
+}
+
+.yoga { background-color: orange; }
+.pilates { background-color: lightblue; }
+.spinning { background-color: lightgreen; }
+.zumba { background-color: pink; }
+.crossfit { background-color: lightcoral; }
+.boxeo { background-color: lightgoldenrodyellow; }
+.default { background-color: lightgray; }
+
+.calendar {
+    margin-top: 8%;
+    margin-bottom: 3%;
+}

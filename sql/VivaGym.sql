@@ -46,6 +46,31 @@ CREATE TABLE Candidatos (
     cv LONGBLOB NOT NULL
 );
 
+-- Crear la tabla Buzón
+CREATE TABLE Buzon (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    apellidos VARCHAR(255) NOT NULL,
+    movil VARCHAR(15) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    tipoConsulta VARCHAR(255) NOT NULL,
+    establecimiento INT NOT NULL,
+    consulta TEXT NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear tabla calendario
+CREATE TABLE Calendario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    dia_semana ENUM('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes') NOT NULL,
+    hora TIME NOT NULL,
+    actividad VARCHAR(100) NOT NULL,
+    duracion INT NOT NULL, -- Duración en minutos
+    monitor VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    capacidad INT NOT NULL
+);
+
 -- Inserciones en la tabla Establecimientos
 INSERT INTO Establecimientos (id, nombre, ciudad, direccion) VALUES
 (1, 'VivaGym Madrid', 'Madrid', 'Calle de Alcalá, 200'),
@@ -153,3 +178,80 @@ INSERT INTO Tarifas (nombre, precio) VALUES
 ('Básica', 25.00),
 ('Zone', 30.00),
 ('Premium', 35.00);
+
+-- Inserciones en la tabla Calendario
+INSERT INTO Calendario (dia_semana, hora, actividad, duracion, monitor, descripcion, capacidad) VALUES
+('Lunes', '08:00:00', 'Yoga', 60, 'Juan Pérez', 'Clase de yoga para principiantes.', 20),
+('Lunes', '09:00:00', 'Pilates', 45, 'María Gómez', 'Pilates intermedio.', 15),
+('Lunes', '10:00:00', 'Spinning', 50, 'Carlos López', 'Clase de spinning avanzada.', 25),
+('Lunes', '11:00:00', 'CrossFit', 30, 'Ana Martínez', 'CrossFit para principiantes.', 20),
+('Lunes', '12:00:00', 'Zumba', 60, 'Luis Rodríguez', 'Clase de Zumba divertida y energética.', 30),
+('Lunes', '13:00:00', 'Body Pump', 45, 'Laura Sánchez', 'Entrenamiento de fuerza con pesas.', 20),
+('Lunes', '14:00:00', 'Boxeo', 50, 'Miguel Fernández', 'Entrenamiento de boxeo.', 15),
+('Lunes', '15:00:00', 'HIIT', 30, 'Sofía Ramírez', 'Entrenamiento de alta intensidad.', 25),
+('Lunes', '16:00:00', 'Aeróbic', 60, 'Carlos González', 'Clase de aeróbic para todos los niveles.', 20),
+('Lunes', '17:00:00', 'Kickboxing', 45, 'Patricia Torres', 'Entrenamiento de kickboxing.', 30),
+('Lunes', '18:00:00', 'Bailes Latinos', 50, 'Diego Jiménez', 'Clase de bailes latinos.', 20),
+('Lunes', '19:00:00', 'TRX', 30, 'Verónica Muñoz', 'Entrenamiento en suspensión TRX.', 15),
+('Lunes', '20:00:00', 'Estiramientos', 60, 'Fernando Castro', 'Sesión de estiramientos y relajación.', 25),
+('Lunes', '21:00:00', 'Yoga', 45, 'Juan Pérez', 'Clase de yoga para todos los niveles.', 20),
+
+('Martes', '08:00:00', 'Pilates', 45, 'María Gómez', 'Pilates para principiantes.', 20),
+('Martes', '09:00:00', 'Zumba', 60, 'Luis Rodríguez', 'Clase de Zumba enérgica.', 30),
+('Martes', '10:00:00', 'Spinning', 50, 'Carlos López', 'Clase de spinning intermedia.', 25),
+('Martes', '11:00:00', 'CrossFit', 30, 'Ana Martínez', 'CrossFit avanzado.', 20),
+('Martes', '12:00:00', 'Yoga', 60, 'Juan Pérez', 'Clase de yoga avanzada.', 20),
+('Martes', '13:00:00', 'Body Pump', 45, 'Laura Sánchez', 'Entrenamiento de fuerza.', 20),
+('Martes', '14:00:00', 'Boxeo', 50, 'Miguel Fernández', 'Clase de boxeo intermedia.', 15),
+('Martes', '15:00:00', 'HIIT', 30, 'Sofía Ramírez', 'HIIT para todos los niveles.', 25),
+('Martes', '16:00:00', 'Aeróbic', 60, 'Carlos González', 'Clase de aeróbic intermedia.', 20),
+('Martes', '17:00:00', 'Kickboxing', 45, 'Patricia Torres', 'Kickboxing avanzado.', 30),
+('Martes', '18:00:00', 'Bailes Latinos', 50, 'Diego Jiménez', 'Clase de bailes latinos.', 20),
+('Martes', '19:00:00', 'TRX', 30, 'Verónica Muñoz', 'TRX intermedio.', 15),
+('Martes', '20:00:00', 'Estiramientos', 60, 'Fernando Castro', 'Clase de estiramientos.', 25),
+('Martes', '21:00:00', 'Yoga', 45, 'Juan Pérez', 'Yoga intermedio.', 20),
+
+('Miércoles', '08:00:00', 'Zumba', 60, 'Luis Rodríguez', 'Zumba para principiantes.', 30),
+('Miércoles', '09:00:00', 'Pilates', 45, 'María Gómez', 'Clase de pilates.', 20),
+('Miércoles', '10:00:00', 'Spinning', 50, 'Carlos López', 'Spinning avanzado.', 25),
+('Miércoles', '11:00:00', 'CrossFit', 30, 'Ana Martínez', 'Clase de CrossFit.', 20),
+('Miércoles', '12:00:00', 'Yoga', 60, 'Juan Pérez', 'Clase de yoga.', 20),
+('Miércoles', '13:00:00', 'Body Pump', 45, 'Laura Sánchez', 'Body Pump para todos los niveles.', 20),
+('Miércoles', '14:00:00', 'Boxeo', 50, 'Miguel Fernández', 'Boxeo intermedio.', 15),
+('Miércoles', '15:00:00', 'HIIT', 30, 'Sofía Ramírez', 'HIIT avanzado.', 25),
+('Miércoles', '16:00:00', 'Aeróbic', 60, 'Carlos González', 'Clase de aeróbic.', 20),
+('Miércoles', '17:00:00', 'Kickboxing', 45, 'Patricia Torres', 'Kickboxing para principiantes.', 30),
+('Miércoles', '18:00:00', 'Bailes Latinos', 50, 'Diego Jiménez', 'Bailes latinos intermedio.', 20),
+('Miércoles', '19:00:00', 'TRX', 30, 'Verónica Muñoz', 'Clase de TRX.', 15),
+('Miércoles', '20:00:00', 'Estiramientos', 60, 'Fernando Castro', 'Estiramientos para todos.', 25),
+('Miércoles', '21:00:00', 'Yoga', 45, 'Juan Pérez', 'Yoga avanzado.', 20),
+
+('Jueves', '08:00:00', 'Spinning', 50, 'Carlos López', 'Spinning para principiantes.', 25),
+('Jueves', '09:00:00', 'Pilates', 45, 'María Gómez', 'Clase de pilates intermedio.', 20),
+('Jueves', '10:00:00', 'Zumba', 60, 'Luis Rodríguez', 'Clase de Zumba avanzada.', 30),
+('Jueves', '11:00:00', 'CrossFit', 30, 'Ana Martínez', 'CrossFit intermedio.', 20),
+('Jueves', '12:00:00', 'Yoga', 60, 'Juan Pérez', 'Yoga para principiantes.', 20),
+('Jueves', '13:00:00', 'Body Pump', 45, 'Laura Sánchez', 'Clase de Body Pump.', 20),
+('Jueves', '14:00:00', 'Boxeo', 50, 'Miguel Fernández', 'Boxeo avanzado.', 15),
+('Jueves', '15:00:00', 'HIIT', 30, 'Sofía Ramírez', 'HIIT intermedio.', 25),
+('Jueves', '16:00:00', 'Aeróbic', 60, 'Carlos González', 'Clase de aeróbic.', 20),
+('Jueves', '17:00:00', 'Kickboxing', 45, 'Patricia Torres', 'Kickboxing para todos.', 30),
+('Jueves', '18:00:00', 'Bailes Latinos', 50, 'Diego Jiménez', 'Bailes latinos avanzados.', 20),
+('Jueves', '19:00:00', 'TRX', 30, 'Verónica Muñoz', 'TRX para principiantes.', 15),
+('Jueves', '20:00:00', 'Estiramientos', 60, 'Fernando Castro', 'Clase de estiramientos.', 25),
+('Jueves', '21:00:00', 'Yoga', 45, 'Juan Pérez', 'Clase de yoga avanzada.', 20),
+
+('Viernes', '08:00:00', 'Yoga', 60, 'Juan Pérez', 'Yoga para todos los niveles.', 20),
+('Viernes', '09:00:00', 'Pilates', 45, 'María Gómez', 'Pilates avanzado.', 20),
+('Viernes', '10:00:00', 'Spinning', 50, 'Carlos López', 'Clase de spinning.', 25),
+('Viernes', '11:00:00', 'CrossFit', 30, 'Ana Martínez', 'Clase de CrossFit avanzada.', 20),
+('Viernes', '12:00:00', 'Zumba', 60, 'Luis Rodríguez', 'Clase de Zumba.', 30),
+('Viernes', '13:00:00', 'Body Pump', 45, 'Laura Sánchez', 'Body Pump avanzado.', 20),
+('Viernes', '14:00:00', 'Boxeo', 50, 'Miguel Fernández', 'Boxeo para principiantes.', 15),
+('Viernes', '15:00:00', 'HIIT', 30, 'Sofía Ramírez', 'HIIT avanzado.', 25),
+('Viernes', '16:00:00', 'Aeróbic', 60, 'Carlos González', 'Aeróbic para todos los niveles.', 20),
+('Viernes', '17:00:00', 'Kickboxing', 45, 'Patricia Torres', 'Clase de kickboxing.', 30),
+('Viernes', '18:00:00', 'Bailes Latinos', 50, 'Diego Jiménez', 'Bailes latinos para principiantes.', 20),
+('Viernes', '19:00:00', 'TRX', 30, 'Verónica Muñoz', 'Clase de TRX avanzada.', 15),
+('Viernes', '20:00:00', 'Estiramientos', 60, 'Fernando Castro', 'Estiramientos avanzados.', 25),
+('Viernes', '21:00:00', 'Yoga', 45, 'Juan Pérez', 'Clase de yoga.', 20);

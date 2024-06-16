@@ -63,14 +63,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./jobs.php">Empleo</a>
+                <a class="nav-link" href="./calendario.php">Calendario</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="./help.php">Ayuda</a>
+                <a class="nav-link" href="#">Ayuda</a>
             </li>
-            <li class="nav-item">
-                <a class="btn btn-orange" href="../forms/center.php">Inscríbete</a>
-            </li>
+            <?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true): ?>
+                <li class="nav-item">
+                    <a class="btn btn-orange" href="../forms/center.php">Inscríbete</a>
+                </li>
+            <?php endif; ?>
             <?php if(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true): ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle user" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,6 +113,78 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     </div>
 </div>
 
+<img src="../img/contacto-vivagym.jpg" class="banner-help" alt="">
+
+<!-- Formulario de contacto -->
+<div class="container mt-5">
+    <h2 class="text-center text-orange">Buzón</h2>
+    <form id="contactForm" action="../includes/insert_buzon.php" method="POST">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" name="nombre">
+                <div class="invalid-feedback">El campo no puede quedar vacío.</div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" class="form-control" id="apellidos" name="apellidos">
+                <div class="invalid-feedback">El campo no puede quedar vacío.</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="movil">Móvil</label>
+                <input type="tel" class="form-control" id="movil" name="movil">
+                <div class="invalid-feedback">El campo no puede quedar vacío.</div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" name="email">
+                <div class="invalid-feedback">El campo no puede quedar vacío.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="tipoConsulta">Tipo de Consulta</label>
+            <select class="form-control" id="tipoConsulta" name="tipoConsulta">
+                <option value="">Seleccione...</option>
+                <option value="actividades_horarios">Actividades y Horarios</option>
+                <option value="cuotas">Cuotas</option>
+                <option value="baja">Baja</option>
+                <option value="incidencias">Incidencias</option>
+                <option value="cambio_metodo_pago">Cambio de Método de Pago</option>
+                <option value="sugerencias">Sugerencias</option>
+            </select>
+            <div class="invalid-feedback">El campo no puede quedar vacío.</div>
+        </div>
+        <div class="form-group">
+            <label for="establecimiento">Establecimiento</label>
+            <select class="form-control" id="establecimiento" name="establecimiento">
+                <option value="">Seleccione...</option>
+                <?php
+                include '../includes/conexion.php';
+                $establecimientos_sql = "SELECT id, nombre FROM Establecimientos";
+                $establecimientos_resultado = $conn->query($establecimientos_sql);
+
+                while ($establecimiento = $establecimientos_resultado->fetch_assoc()) {
+                    echo '<option value="' . $establecimiento['id'] . '">' . $establecimiento['nombre'] . '</option>';
+                }
+                $conn->close();
+                ?>
+            </select>
+            <div class="invalid-feedback">El campo no puede quedar vacío.</div>
+        </div>
+        <div class="form-group">
+            <label for="consulta">Consulta</label>
+            <textarea class="form-control" id="consulta" name="consulta" rows="4"></textarea>
+            <div class="invalid-feedback">El campo no puede quedar vacío.</div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-orange center">Enviar</button>
+        </div>
+    </form>
+</div>
+
+
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -124,3 +198,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="./js/main.js"></script>
+<script src="../js/user.js"></script>
+</body>
+</html>
