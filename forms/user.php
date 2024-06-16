@@ -1,13 +1,13 @@
 <?php
-session_start(); // Iniciar la sesión
+session_start(); 
 
 if(!isset($_SESSION['city'])) {
-    header("Location: ./center.php"); // Redirigir a center.php
+    header("Location: ./center.php"); 
     exit();
 }
 
 if(empty($_POST['cuota'])) {
-    header("Location: ./prices.php"); // Redirigir a prices.php si no se selecciona una cuota
+    header("Location: ./prices.php");
     exit();
 }
 
@@ -128,7 +128,7 @@ $selectedCuota = $_SESSION['cuota'];
                 </div>
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <button type="submit" class="btn btn-lg orange">Continuar</button>
+                        <button type="submit" class="btn btn-lg orange">Siguiente</button>
                     </div>
                 </div>
             </form>

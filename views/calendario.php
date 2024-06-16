@@ -144,8 +144,14 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                     'Spinning' => 'spinning',
                     'Zumba' => 'zumba',
                     'Crossfit' => 'crossfit',
-                    'Boxeo' => 'boxeo'
+                    'Boxeo' => 'boxeo',
+                    'Body Pump' => 'body-pump',      
+                    'HIIT' => 'hiit',                 
+                    'Aerobic' => 'aerobic',        
+                    'Cardio' => 'cardio',             
+                    'Kickboxing' => 'kickboxing'      
                 ];
+                
 
                 foreach ($horas as $hora) {
                     echo '<tr>';

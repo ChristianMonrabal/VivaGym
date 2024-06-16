@@ -136,10 +136,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Empleo</a>
+                <a class="nav-link" href="../views/calendario.php">Calendario</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Ayuda</a>
+                <a class="nav-link" href="../views/help.php">Ayuda</a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-orange" href="../forms/center.php">Inscríbete</a>

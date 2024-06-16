@@ -2,7 +2,6 @@
 session_start(); // Iniciar la sesión
 
 if(isset($_POST['city'])) {
-    // Si se ha seleccionado una ciudad, almacenarla en la sesión
     $_SESSION['city'] = $_POST['city'];
     header("Location: ./prices.php");
     exit();
@@ -49,14 +48,10 @@ if(isset($_POST['city'])) {
                     <label for="city-select">Selecciona tu ciudad:</label>
                     <select class="form-control" id="city-select" name="city">
                         <?php
-                        // Incluir archivo de conexión
                         include "../includes/conexion.php";
-                        // Consultar todas las ciudades y sus centros con direcciones
                         $sql = "SELECT DISTINCT id ciudad, nombre, direccion FROM Establecimientos";
                         $result = $conn->query($sql);
-                        // Verificar si hay resultados
                         if ($result->num_rows > 0) {
-                            // Mostrar opciones de ciudad con centros y direcciones
                             while($row = $result->fetch_assoc()) {
                                 echo "<option value='" . $row["ciudad"] . "'>" . $row["ciudad"] . " - " . $row["nombre"] . " - " . $row["direccion"] . "</option>";
                             }

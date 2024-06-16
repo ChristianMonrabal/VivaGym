@@ -1,10 +1,9 @@
 <?php
 include "../includes/conexion.php";
-session_start(); // Iniciar la sesión
+session_start();
 
-// Verificar si no se ha seleccionado una ciudad
 if(!isset($_SESSION['city'])) {
-    header("Location: ./center.php"); // Redirigir a center.php
+    header("Location: ./center.php");
     exit();
 }
 

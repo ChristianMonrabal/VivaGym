@@ -137,22 +137,22 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 <div class="container">
     <h2 class="text-center text-orange" id="vivagym">¿Por qué VivaGym?</h2>
     <div class="row">
-        <div class="col-md-3 text-center">
+        <div class="col-md-3 text-center enlarge-on-hover">
             <img src="./img/permanencia.png">
             <h4>Sin permanencia</h4>
             <p>Así es, en VivaGym tienes la máxima flexibilidad posible para darte de baja cuando desees ya que no tenemos permanencia mínima (¡sin letra pequeña!)</p>
         </div>
-        <div class="col-md-3 text-center">
+        <div class="col-md-3 text-center enlarge-on-hover">
             <img src="./img/instalacion.png">
             <h4>Amplias instalaciones</h4>
             <p>Te ofrecemos 7 zonas diferentes de entrenamiento para que hagas tu rutina como más te gusta. ¡Todo lo que necesitas para entrenar a tu manera!</p>
         </div>
-        <div class="col-md-3 text-center">
+        <div class="col-md-3 text-center enlarge-on-hover">
             <img src="./img/actividades.png">
             <h4>Gran variedad de actividades dirigidas</h4>
             <p>En VivaGym no hay lugar para el aburrimiento. Encuentra las mejores actividades dirigidas: Clases Les Mills, Zumba, Hyrox, Cycling… ¡vas a querer probar todas!</p>
         </div>
-        <div class="col-md-3 text-center">
+        <div class="col-md-3 text-center enlarge-on-hover">
             <img src="./img/horario.png">
             <h4>Amplio horario de apertura</h4>
             <p>¡Ven cuando quieras! En VivaGym abrimos 363 días al año con un amplio horario de apertura. ¡Todas las opciones están a tu alcance!</p>
