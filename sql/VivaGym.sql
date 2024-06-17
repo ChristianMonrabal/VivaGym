@@ -71,6 +71,16 @@ CREATE TABLE Calendario (
     capacidad INT NOT NULL
 );
 
+-- Crear la tabla Reservas
+CREATE TABLE Reservas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    actividad VARCHAR(100) NOT NULL,
+    dia_semana ENUM('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes') NOT NULL,
+    hora TIME NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Usuarios(id) ON DELETE CASCADE
+);
+
 -- Inserciones en la tabla Establecimientos
 INSERT INTO Establecimientos (id, nombre, ciudad, direccion) VALUES
 (1, 'VivaGym Madrid', 'Madrid', 'Calle de Alcalá, 200'),

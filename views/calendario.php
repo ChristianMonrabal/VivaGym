@@ -149,13 +149,30 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                     'HIIT' => 'hiit',                 
                     'Aerobic' => 'aerobic',        
                     'Cardio' => 'cardio',             
-                    'Kickboxing' => 'kickboxing'      
+                    'Kickboxing' => 'kickboxing',
+                    'Bailes Latinos' => 'bailes-latinos', 
+                    'TRX' => 'trx', 
+                    'Estiramientos' => 'estiramientos'    
                 ];
-                
+
+                $reservas = [];
+                if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                    $usuario_id = $_SESSION['id'];
+                    $reservas_sql = "SELECT actividad, dia_semana, hora FROM Reservas WHERE usuario_id = ?";
+                    if ($stmt = $conn->prepare($reservas_sql)) {
+                        $stmt->bind_param("i", $usuario_id);
+                        $stmt->execute();
+                        $resultado = $stmt->get_result();
+                        while ($reserva = $resultado->fetch_assoc()) {
+                            $reservas[] = $reserva;
+                        }
+                        $stmt->close();
+                    }
+                }
 
                 foreach ($horas as $hora) {
                     echo '<tr>';
-                    echo '<td>' . $hora . '</td>';
+                    echo '<td>' . date('H:i', strtotime($hora)) . '</td>';
 
                     foreach ($dias_semana as $dia) {
                         $sql = "SELECT actividad, duracion, monitor, descripcion, capacidad 
@@ -165,13 +182,27 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 
                         if ($resultado->num_rows > 0) {
                             $clase = $resultado->fetch_assoc();
-                            $clase_color = isset($colores_clases[$clase['actividad']]) ? $colores_clases[$clase['actividad']] : 'default';
+                            $clase_color = isset($colores_clases[$clase['actividad']]) ? $colores_clases[$clase['actividad']] : '';
+
                             echo '<td class="' . $clase_color . '">';
+                            $tiene_reserva = false;
+                            foreach ($reservas as $reserva) {
+                                if ($reserva['actividad'] == $clase['actividad'] && $reserva['dia_semana'] == $dia && $reserva['hora'] == $hora) {
+                                    $tiene_reserva = true;
+                                    break;
+                                }
+                            }
+
                             echo '<strong>' . $clase['actividad'] . '</strong><br>';
                             echo 'Duración: ' . $clase['duracion'] . ' min<br>';
                             echo 'Monitor: ' . $clase['monitor'] . '<br>';
                             echo 'Capacidad: ' . $clase['capacidad'] . ' personas<br>';
                             echo '<em>' . $clase['descripcion'] . '</em>';
+
+                            if ($tiene_reserva) {
+                                echo '<br><span class="icono-reserva">✔</span>';
+                            }
+
                             echo '</td>';
                         } else {
                             echo '<td>-</td>';
@@ -186,6 +217,45 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
             </tbody>
         </table>
     </div>
+
+    <!-- Formulario de Reserva -->
+    <h2 class="text-center text-orange mt-5">Reservar Clase</h2>
+    <form action="../includes/reservas.php" method="POST">
+        <div class="form-group">
+            <label for="actividad">Actividad</label>
+            <select class="form-control" id="actividad" name="actividad" required onchange="actualizarHoras()">
+                <option value="" disabled selected>Seleccione una actividad</option>
+                <?php
+                include '../includes/conexion.php';
+                $actividades_sql = "SELECT DISTINCT actividad FROM Calendario";
+                $actividades_resultado = $conn->query($actividades_sql);
+
+                while ($actividad = $actividades_resultado->fetch_assoc()) {
+                    echo '<option value="' . $actividad['actividad'] . '">' . $actividad['actividad'] . '</option>';
+                }
+                $conn->close();
+                ?>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dia_semana">Día de la Semana</label>
+            <select class="form-control" id="dia_semana" name="dia_semana" required onchange="actualizarHoras()">
+                <option value="" disabled selected>Seleccione un día</option>
+                <option value="Lunes">Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miércoles">Miércoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="hora">Hora</label>
+            <select class="form-control" id="hora" name="hora" required>
+                <option value="" disabled selected>Seleccione una hora</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary orange reservar">Reservar</button>
+    </form>
 </div>
 
 <footer class="footer">
@@ -197,9 +267,39 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
         </div>
     </div>
 </footer>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="./js/main.js"></script>
+<script>
+function actualizarHoras() {
+    var actividad = document.getElementById('actividad').value;
+    var dia_semana = document.getElementById('dia_semana').value;
+    var horaSelect = document.getElementById('hora');
+    horaSelect.innerHTML = '<option value="" disabled selected>Seleccione una hora</option>'; // Reset options
+
+    if (actividad && dia_semana) {
+        <?php
+        include '../includes/conexion.php';
+        $horarios_sql = "SELECT actividad, dia_semana, hora FROM Calendario";
+        $horarios_resultado = $conn->query($horarios_sql);
+        $horarios = [];
+        while ($horario = $horarios_resultado->fetch_assoc()) {
+            $horarios[] = $horario;
+        }
+        $conn->close();
+        ?>
+        var horarios = <?php echo json_encode($horarios); ?>;
+        for (var i = 0; i < horarios.length; i++) {
+            if (horarios[i].actividad === actividad && horarios[i].dia_semana === dia_semana) {
+                var option = document.createElement('option');
+                option.value = horarios[i].hora;
+                option.text = horarios[i].hora.slice(0, 5); // Format to HH:mm
+                horaSelect.appendChild(option);
+            }
+        }
+    }
+}
+</script>
 </body>
 </html>

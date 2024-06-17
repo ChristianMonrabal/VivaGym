@@ -140,13 +140,14 @@
 .crossfit { background-color: lightcoral; }
 .boxeo { background-color: lightgoldenrodyellow; }
 .default { background-color: lightgray; }
-
 .body-pump { background-color: #ffcc00; }
 .hiit { background-color: #ff6666; }
 .aerobic { background-color: #99ccff; }
 .cardio { background-color: #ff99cc; }
 .kickboxing { background-color: #99ff99; }
-
+.bailes-latinos { background-color: #ff9933; }
+.trx { background-color: #66ccff; }
+.estiramientos { background-color: #cc99ff; }
 
 .calendar {
     margin-top: 8%;
@@ -158,4 +159,10 @@
 }
 .enlarge-on-hover img:hover {
     transform: scale(1.1);
+}
+
+.reservar {
+    margin-left: 45%;
+    border-radius: 30px;
+    border: 2px solid #FF7F00;
 }
