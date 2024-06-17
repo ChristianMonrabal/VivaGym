@@ -22,6 +22,9 @@ if(isset($_POST['city'])) {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
+<a class="navbar-brand" href="../index.php">
+    <img src="../img/icon.png" class="d-inline-block align-top icon" alt="VivaGym Logo">
+</a>
 <div class="container">
     <div class="row">
         <div class="col-sm-12">

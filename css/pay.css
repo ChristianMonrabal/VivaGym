@@ -64,3 +64,8 @@ padding: 140px 0;
     background-color: orange !important;
     color: #fff !important;
 }
+
+.icon {
+    width: 200px;
+    height: 200px;
+}

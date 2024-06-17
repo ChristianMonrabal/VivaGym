@@ -16,6 +16,7 @@ $_SESSION['cuota'] = $selectedCuota;
 $selectedCity = $_SESSION['city'];
 $selectedCuota = $_SESSION['cuota'];
 
+
 ?>
 
 
@@ -34,6 +35,9 @@ $selectedCuota = $_SESSION['cuota'];
     <script src="../js/user.js"></script>
 </head>
 <body>
+<a class="navbar-brand" href="../index.php">
+    <img src="../img/icon.png" class="d-inline-block align-top icon" alt="VivaGym Logo">
+</a>
 <div class="container-fluid">
 <div class="container">
     <div class="row">

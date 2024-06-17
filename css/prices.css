@@ -285,3 +285,8 @@ margin-bottom: 30px;
     background-color: darkorange !important;
     color:#fff !important;
 }
+
+.icon {
+    width: 200px;
+    height: 200px;
+}

@@ -14,7 +14,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VivaGym</title>
+    <title>VivaGym - Ayuda</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">

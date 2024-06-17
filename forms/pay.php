@@ -38,7 +38,11 @@ $_SESSION['city'] = $selectedCity;
 <link rel="stylesheet" href="../css/pay.css">
 <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
 </head>
+
 <body>
+<a class="navbar-brand" href="../index.php">
+    <img src="../img/icon.png" class="d-inline-block align-top icon" alt="VivaGym Logo">
+</a>
 <div class="container-fluid">
 <div class="container">
     <div class="row">

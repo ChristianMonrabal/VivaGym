@@ -34,6 +34,9 @@ $conn->close();
 </head>
 
 <body>
+<a class="navbar-brand" href="../index.php">
+    <img src="../img/icon.png" class="d-inline-block align-top icon" alt="VivaGym Logo">
+</a>
 <div class="container-fluid">
 <div class="container">
     <div class="row">

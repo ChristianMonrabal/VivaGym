@@ -58,3 +58,8 @@
     .border-danger {
         border: 1px solid red;
     }
+
+    .icon {
+        width: 200px;
+        height: 200px;
+    }

@@ -69,3 +69,8 @@ section {
     padding: 20px;
     margin-bottom: 20px;
 }
+
+.icon {
+    width: 200px;
+    height: 200px;
+}
