@@ -166,3 +166,10 @@
     border-radius: 30px;
     border: 2px solid #FF7F00;
 }
+
+.dia-actual {
+    border: 2px solid orange;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: orange;
+}

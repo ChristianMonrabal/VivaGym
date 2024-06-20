@@ -185,24 +185,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
                             $clase_color = isset($colores_clases[$clase['actividad']]) ? $colores_clases[$clase['actividad']] : '';
 
                             echo '<td class="' . $clase_color . '">';
-                            $tiene_reserva = false;
-                            foreach ($reservas as $reserva) {
-                                if ($reserva['actividad'] == $clase['actividad'] && $reserva['dia_semana'] == $dia && $reserva['hora'] == $hora) {
-                                    $tiene_reserva = true;
-                                    break;
-                                }
-                            }
-
                             echo '<strong>' . $clase['actividad'] . '</strong><br>';
                             echo 'Duración: ' . $clase['duracion'] . ' min<br>';
                             echo 'Monitor: ' . $clase['monitor'] . '<br>';
                             echo 'Capacidad: ' . $clase['capacidad'] . ' personas<br>';
                             echo '<em>' . $clase['descripcion'] . '</em>';
-
-                            if ($tiene_reserva) {
-                                echo '<br><span class="icono-reserva">✔</span>';
-                            }
-
                             echo '</td>';
                         } else {
                             echo '<td>-</td>';
@@ -218,7 +205,73 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
         </table>
     </div>
 
-    <!-- Formulario de Reserva -->
+<!-- Nuevo Calendario Mensual -->
+<h2 class="text-center text-orange mt-5">Mis Reservas Mensuales</h2>
+<div id="calendar" class="table-responsive">
+    <?php
+    function generarCalendarioMensual($reservas) {
+        $dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        $mes_actual = date('n');
+        $año_actual = date('Y');
+        $primer_dia_mes = mktime(0, 0, 0, $mes_actual, 1, $año_actual);
+        $dias_mes = date('t', $primer_dia_mes);
+        $primer_dia_semana = date('w', $primer_dia_mes);
+        $hoy = date('Y-m-d');
+        $reservas_por_fecha = [];
+
+        foreach ($reservas as $reserva) {
+            $dia_semana_num = array_search($reserva['dia_semana'], $dias_semana) + 1;
+            $semana_actual = date('W');
+            $fecha = new DateTime();
+            $fecha->setISODate($año_actual, $semana_actual, $dia_semana_num);
+            $fecha_str = $fecha->format('Y-m-d');
+
+            if (!isset($reservas_por_fecha[$fecha_str])) {
+                $reservas_por_fecha[$fecha_str] = [];
+            }
+            $reserva_clave = $reserva['actividad'] . '|' . $reserva['hora'];
+            if (!array_key_exists($reserva_clave, $reservas_por_fecha[$fecha_str])) {
+                $reservas_por_fecha[$fecha_str][$reserva_clave] = $reserva;
+            }
+        }
+        echo '<table class="table table-bordered">';
+        echo '<thead><tr>';
+        foreach ($dias_semana as $dia) {
+            echo '<th>' . $dia . '</th>';
+        }
+        echo '</tr></thead><tbody><tr>';
+        for ($i = 0; $i < $primer_dia_semana; $i++) {
+            echo '<td></td>';
+        }
+        for ($dia = 1; $dia <= $dias_mes; $dia++) {
+            if (($dia + $primer_dia_semana - 1) % 7 == 0) {
+                echo '</tr><tr>';
+            }
+            $fecha_actual = date('Y-m-d', mktime(0, 0, 0, $mes_actual, $dia, $año_actual));
+            $numero_clase = $fecha_actual == $hoy ? 'dia-actual' : '';
+            echo '<td>';
+            echo '<strong class="' . $numero_clase . '">' . $dia . '</strong><br>';
+            if (isset($reservas_por_fecha[$fecha_actual])) {
+                usort($reservas_por_fecha[$fecha_actual], function($a, $b) {
+                    return strtotime($a['hora']) - strtotime($b['hora']);
+                });
+                foreach ($reservas_por_fecha[$fecha_actual] as $reserva_clave => $reserva) {
+                    echo '<div class="reserva">';
+                    echo '<strong>' . $reserva['actividad'] . '</strong><br>';
+                    echo date('H:i', strtotime($reserva['hora']));
+                    echo '</div>';
+                }
+            }
+            echo '</td>';
+        }
+        echo '</tr></tbody></table>';
+    }
+    generarCalendarioMensual($reservas);
+    ?>
+</div>
+
+
+<!-- Formulario de Reserva -->
     <h2 class="text-center text-orange mt-5">Reservar Clase</h2>
     <form action="../includes/reservas.php" method="POST">
         <div class="form-group">
@@ -276,7 +329,7 @@ function actualizarHoras() {
     var actividad = document.getElementById('actividad').value;
     var dia_semana = document.getElementById('dia_semana').value;
     var horaSelect = document.getElementById('hora');
-    horaSelect.innerHTML = '<option value="" disabled selected>Seleccione una hora</option>'; // Reset options
+    horaSelect.innerHTML = '<option value="" disabled selected>Seleccione una hora</option>';
 
     if (actividad && dia_semana) {
         <?php
@@ -294,7 +347,7 @@ function actualizarHoras() {
             if (horarios[i].actividad === actividad && horarios[i].dia_semana === dia_semana) {
                 var option = document.createElement('option');
                 option.value = horarios[i].hora;
-                option.text = horarios[i].hora.slice(0, 5); // Format to HH:mm
+                option.text = horarios[i].hora.slice(0, 5);
                 horaSelect.appendChild(option);
             }
         }
