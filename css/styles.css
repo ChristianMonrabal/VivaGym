@@ -167,6 +167,11 @@
     border: 2px solid #FF7F00;
 }
 
+.anular {
+    border-radius: 30px;
+    border: 2px solid #FF7F00;
+}
+
 .dia-actual {
     border: 2px solid orange;
     border-radius: 50%;

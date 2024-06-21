@@ -311,6 +311,27 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     </form>
 </div>
 
+<div class="container mt-4">
+    <h2 class="text-center text-orange">Anular reservas</h2>
+    <?php if (!empty($reservas)): ?>
+        <form method="POST" action="../includes/anular_reservas.php" class="text-center">
+            <div class="form-group">
+                <select class="form-control" id="reserva" name="reserva">
+                    <?php
+                    foreach ($reservas as $reserva) {
+                        $reserva_detalle = $reserva['actividad'] . ' - ' . $reserva['dia_semana'] . ' - ' . date('H:i', strtotime($reserva['hora']));
+                        echo '<option value="' . $reserva['actividad'] . ',' . $reserva['dia_semana'] . ',' . $reserva['hora'] . '">' . $reserva_detalle . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary orange anular">Anular reserva</button>
+        </form>
+    <?php else: ?>
+        <p class="text-center">No tienes reservas.</p>
+    <?php endif; ?>
+</div>
+
 <footer class="footer">
     <div class="container">
         <div class="row">
