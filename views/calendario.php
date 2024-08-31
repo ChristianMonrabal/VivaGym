@@ -19,6 +19,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="shortcut icon" href="../img/icon.png" type="image/x-icon">
     <script src="../js/main.js"></script>
+    <script src="../js/calendario.js"></script>
 </head>
 <body>
 
@@ -205,70 +206,56 @@ if (isset($_GET['action']) && $_GET['action'] == 'logout') {
         </table>
     </div>
 
-<!-- Nuevo Calendario Mensual -->
-<h2 class="text-center text-orange mt-5">Mis Reservas Mensuales</h2>
+<!-- Nuevo Calendario Semanal -->
+<h2 class="text-center text-orange mt-5">Mis Reservas Semanales</h2>
 <div id="calendar" class="table-responsive">
     <?php
-    function generarCalendarioMensual($reservas) {
+    function generarCalendarioSemanal($reservas) {
         $dias_semana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-        $mes_actual = date('n');
-        $año_actual = date('Y');
-        $primer_dia_mes = mktime(0, 0, 0, $mes_actual, 1, $año_actual);
-        $dias_mes = date('t', $primer_dia_mes);
-        $primer_dia_semana = date('w', $primer_dia_mes);
         $hoy = date('Y-m-d');
-        $reservas_por_fecha = [];
+        $reservas_por_dia = [];
 
+        // Organizar reservas por día de la semana
         foreach ($reservas as $reserva) {
-            $dia_semana_num = array_search($reserva['dia_semana'], $dias_semana) + 1;
-            $semana_actual = date('W');
-            $fecha = new DateTime();
-            $fecha->setISODate($año_actual, $semana_actual, $dia_semana_num);
-            $fecha_str = $fecha->format('Y-m-d');
-
-            if (!isset($reservas_por_fecha[$fecha_str])) {
-                $reservas_por_fecha[$fecha_str] = [];
+            if (!isset($reservas_por_dia[$reserva['dia_semana']])) {
+                $reservas_por_dia[$reserva['dia_semana']] = [];
             }
-            $reserva_clave = $reserva['actividad'] . '|' . $reserva['hora'];
-            if (!array_key_exists($reserva_clave, $reservas_por_fecha[$fecha_str])) {
-                $reservas_por_fecha[$fecha_str][$reserva_clave] = $reserva;
-            }
+            $reservas_por_dia[$reserva['dia_semana']][] = $reserva;
         }
+
         echo '<table class="table table-bordered">';
         echo '<thead><tr>';
         foreach ($dias_semana as $dia) {
             echo '<th>' . $dia . '</th>';
         }
         echo '</tr></thead><tbody><tr>';
-        for ($i = 0; $i < $primer_dia_semana; $i++) {
-            echo '<td></td>';
-        }
-        for ($dia = 1; $dia <= $dias_mes; $dia++) {
-            if (($dia + $primer_dia_semana - 1) % 7 == 0) {
-                echo '</tr><tr>';
-            }
-            $fecha_actual = date('Y-m-d', mktime(0, 0, 0, $mes_actual, $dia, $año_actual));
-            $numero_clase = $fecha_actual == $hoy ? 'dia-actual' : '';
+
+        // Mostrar reservas organizadas por día
+        foreach ($dias_semana as $dia) {
             echo '<td>';
-            echo '<strong class="' . $numero_clase . '">' . $dia . '</strong><br>';
-            if (isset($reservas_por_fecha[$fecha_actual])) {
-                usort($reservas_por_fecha[$fecha_actual], function($a, $b) {
+            if (isset($reservas_por_dia[$dia])) {
+                usort($reservas_por_dia[$dia], function ($a, $b) {
                     return strtotime($a['hora']) - strtotime($b['hora']);
                 });
-                foreach ($reservas_por_fecha[$fecha_actual] as $reserva_clave => $reserva) {
+                foreach ($reservas_por_dia[$dia] as $reserva) {
                     echo '<div class="reserva">';
                     echo '<strong>' . $reserva['actividad'] . '</strong><br>';
-                    echo date('H:i', strtotime($reserva['hora']));
+                    echo date('H:i', strtotime($reserva['hora'])) . '<br>';
                     echo '</div>';
                 }
+            } else {
+                echo '<p>Sin reservas</p>';
             }
             echo '</td>';
         }
+
         echo '</tr></tbody></table>';
     }
-    generarCalendarioMensual($reservas);
+
+    generarCalendarioSemanal($reservas);
     ?>
 </div>
+
 
 
 <!-- Formulario de Reserva -->
@@ -355,21 +342,47 @@ function actualizarHoras() {
     if (actividad && dia_semana) {
         <?php
         include '../includes/conexion.php';
+        
+        // Obtener las horas del calendario
         $horarios_sql = "SELECT actividad, dia_semana, hora FROM Calendario";
         $horarios_resultado = $conn->query($horarios_sql);
         $horarios = [];
         while ($horario = $horarios_resultado->fetch_assoc()) {
             $horarios[] = $horario;
         }
+        
+        // Obtener las horas reservadas por el usuario
+        $usuario_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
+        $reservadas_sql = "SELECT actividad, dia_semana, hora FROM Reservas WHERE usuario_id = ?";
+        $stmt = $conn->prepare($reservadas_sql);
+        $stmt->bind_param("i", $usuario_id);
+        $stmt->execute();
+        $resultado_reservas = $stmt->get_result();
+        $reservadas = [];
+        while ($reserva = $resultado_reservas->fetch_assoc()) {
+            $reservadas[] = $reserva;
+        }
+        $stmt->close();
         $conn->close();
         ?>
+        
+        // Convertir PHP arrays a JavaScript
         var horarios = <?php echo json_encode($horarios); ?>;
+        var reservadas = <?php echo json_encode($reservadas); ?>;
+
+        // Filtrar horas no reservadas por el usuario
         for (var i = 0; i < horarios.length; i++) {
             if (horarios[i].actividad === actividad && horarios[i].dia_semana === dia_semana) {
-                var option = document.createElement('option');
-                option.value = horarios[i].hora;
-                option.text = horarios[i].hora.slice(0, 5);
-                horaSelect.appendChild(option);
+                var isReserved = reservadas.some(function(reserva) {
+                    return reserva.actividad === actividad && reserva.dia_semana === dia_semana && reserva.hora === horarios[i].hora;
+                });
+
+                if (!isReserved) {
+                    var option = document.createElement('option');
+                    option.value = horarios[i].hora;
+                    option.text = horarios[i].hora.slice(0, 5);
+                    horaSelect.appendChild(option);
+                }
             }
         }
     }
